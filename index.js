@@ -23,8 +23,8 @@ const DOM = {
     success: form.querySelector("#success"),
     weak: form.querySelector("#weak"),
     strong: form.querySelector("#strong"),
-    password: form.querySelector("#password"),
-    passwordConfirm: form.querySelector("#passwordConfirm")
+    password: form["password"],
+    passwordConfirm: form["passwordConfirm"]
 }
 
 console.log(DOM)
@@ -54,23 +54,23 @@ function raiseMessage(element, message) {
 // REGEX password
 //=========================
 
-// Password expression. Password must be between 4 and 8 digits long and
+// Password expression. Password must be between 5 and 99 digits long and
 // include at least one numeric digit. 	
 //^(?=.*\d).{4,8}$
-const passwordRegex = /^(?=.*\d).{1,4}$/
-
+const passwordRegex = /^(?=.*\d).{5,99}$/
+debugger
 DOM.password.addEventListener("input", function (event) {
-    resetErrors()
+    resetErrorsPass()
     const { value } = event.currentTarget
-    if (!value) return raiseMessage(DOM.error, "Input Is Required")
+    if (!value) return raiseMessage(DOM.weak, "Input Is Required")
     const passwordValidationResult = validatepasword(value)
     if (!passwordValidationResult) return raiseMessage(DOM.weak, "weak")
     return raiseMessage(DOM.strong, "strong")
 })
-function resetErrors() {
-    const { error, success } = DOM;
-    error.innerHTML = "";
-    success.innerHTML = "";
+function resetErrorsPass() {
+    const { weak, strong } = DOM;
+    weak.innerHTML = "";
+    strong.innerHTML = "";
 }
 function validatepasword(input) {
     return passwordRegex.test(input.toLowerCase())
